@@ -1,39 +1,39 @@
-// UNDERSTAND import需要hooks
-import { createStore } from 'redux';
+// UNDERSTAND hooks from redux Toolkit
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-//UNDERSTAND create an object for reducer to use
+//UNDERSTAND create an object
 const initialState = { counter: 0, showCounter: true };
 
-//IMPORTANT Create reducer to update state
-//IMPORTANT 用reducer去update state,return的結構要完全跟original state是一樣的
-const counterReducer = (state = initialState, action) => {
-  if (action.type === 'increment') {
-    //UNDERSTAND return的結構要完全跟原本的state是一樣的
-    return { counter: state.counter + 1, showCounter: state.showCounter };
-  }
-
-  if (action.type === 'increase') {
-    return {
-      counter: state.counter + action.amount,
-      showCounter: state.showCounter,
-    };
-  }
-
-  if (action.type === 'decrement') {
-    return { counter: state.counter - 1, showCounter: state.showCounter };
-  }
-
-  if (action.type === 'toggle') {
-    return {
-      showCounter: !state.showCounter,
-      counter: state.counter,
-    };
-  }
-
-  return state;
-};
+const counterSlice = createSlice({
+  name: 'counter',
+  //IMPORTANT initial state
+  initialState,
+  // IMPORTANT Reducers(有+s) is an object, a map you could say, of all the reducers this slice needs.
+  reducers: {
+    //IMPORTANT every method here (parameter的那個state) will automatically receive the latest state.
+    //IMPORTANT Redux toolkit internally uses another package called imgur, which will detect code like this and which will automatically clone the existing state, create a new state object, keep all the state which we're not editing, and override the state which we are editing in an immutable way.
+    increment(state) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter = state.counter + action.payload;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
 
 //IMPORTANT create store
-const store = createStore(counterReducer);
+//IMPORTANT configureStore - it makes merging multiple reducers into one reducer easier thereafter
+const store = configureStore({
+  reducer: counterSlice.reducer,
+});
+
+//IMPORTANT get action method through counterSlice
+export const counterActions = counterSlice.actions;
 
 export default store;

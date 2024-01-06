@@ -1,6 +1,7 @@
 // UNDERSTAND import需要hooks
 import { useDispatch, useSelector } from 'react-redux';
-//
+// IMPORTANT import action method
+import { counterActions } from '../store/index';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -14,20 +15,21 @@ const Counter = () => {
 
   // IMPORTANT create action through dispatch for updating store
   const incrementHandler = () => {
-    dispatch({ type: 'increment' });
+    dispatch(counterActions.increment());
   };
 
-  //IMPORTANT dispatch的argument可以放任何你會用到的data去update state
+  //IMPORTANT
   const increaseHandler = () => {
-    dispatch({ type: 'increase', amount: 5 });
+    dispatch(counterActions.increase(10)); //IMPORTANT {type: SOME UNIQUE IDENTIFIER, payload: 10}在dispatch時會製造出來的object,paylod是默認的名稱不能改
+    //UNDERSTAND 這裡之後忘記的話,可以回去看Udemy的Redux章節的"Migrating Everything To Redux Toolkit"
   };
 
   const decrementHandler = () => {
-    dispatch({ type: 'decrement' });
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: 'toggle' });
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
@@ -36,7 +38,7 @@ const Counter = () => {
       {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
-        <button onClick={increaseHandler}>Increase by 5</button>
+        <button onClick={increaseHandler}>Increase by 10</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>

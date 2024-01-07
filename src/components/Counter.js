@@ -1,7 +1,7 @@
 // UNDERSTAND import需要hooks
 import { useDispatch, useSelector } from 'react-redux';
 // IMPORTANT import action method
-import { counterActions } from '../store/index';
+import { counterActions } from '../store/counter';
 import classes from './Counter.module.css';
 
 const Counter = () => {

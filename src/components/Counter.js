@@ -10,8 +10,8 @@ const Counter = () => {
 
   //IMPORTANT 用useSelecor去擷取我們要用的data from store
   //IMPORTANT store如果被update, 用useSelector的話會自動刷新component
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
 
   // IMPORTANT create action through dispatch for updating store
   const incrementHandler = () => {
